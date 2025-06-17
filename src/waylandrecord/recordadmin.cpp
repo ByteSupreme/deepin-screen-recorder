@@ -148,7 +148,7 @@ int RecordAdmin::startStream()
     if (m_pInputStream->GetVideoInputInfo(cx, cy, fps, pixel_fmt)) { //获取视频采集源的信息
         //cx:width cy:height  //CBR（固定码率控制）, VBR是动态码率,  平均码率ABR,
         //视频编码器常用的码率控制方式: abr(平均码率)，crf（限制码率），cqp（固定质量）
-        m_pOutputStream->SetVideoCodecProp(AV_CODEC_ID_H264, fps, 500000/*bps*/, 30/*GOP*/, cx, cy); //设置视频编码器属性
+        m_pOutputStream->SetVideoCodecProp(AV_CODEC_ID_H264, fps, 500000/*bps*/, 60/*GOP*/, cx, cy); //设置视频编码器属性
     }
     int sample_rate = 0, channels = 0, layout;
     AVSampleFormat  sample_fmt;
