@@ -198,6 +198,7 @@ void SubToolWidget::initRecordOption()
     QAction *fps20Action = new QAction(tr("20 fps"), m_recordOptionMenu);
     QAction *fps24Action = new QAction(tr("24 fps"), m_recordOptionMenu);
     QAction *fps30Action = new QAction(tr("30 fps"), m_recordOptionMenu);
+    QAction *fps60Action = new QAction(tr("60 fps"), m_recordOptionMenu);
     // 声音
     QAction *audio = new QAction(tr("Sound"), m_recordOptionMenu);
     //QAction *notAudio = new QAction(tr("Not Audio"), m_recordOptionMenu);
@@ -221,6 +222,7 @@ void SubToolWidget::initRecordOption()
     Utils::setAccessibility(fps20Action, "fps20Action");
     Utils::setAccessibility(fps24Action, "fps24Action");
     Utils::setAccessibility(fps30Action, "fps30Action");
+    Utils::setAccessibility(fps60Action, "fps60Action");
 
     formatTitleAction->setDisabled(true);
     gifAction->setCheckable(true);
@@ -236,11 +238,13 @@ void SubToolWidget::initRecordOption()
     fps20Action->setCheckable(true);
     fps24Action->setCheckable(true);
     fps30Action->setCheckable(true);
+    fps60Action->setCheckable(true);
     t_fpsGroup->addAction(fps5Action);
     t_fpsGroup->addAction(fps10Action);
     t_fpsGroup->addAction(fps20Action);
     t_fpsGroup->addAction(fps24Action);
     t_fpsGroup->addAction(fps30Action);
+    t_fpsGroup->addAction(fps60Action);
 
     audio->setDisabled(true);
     //notAudio->setCheckable(true);
@@ -286,6 +290,7 @@ void SubToolWidget::initRecordOption()
     m_recordOptionMenu->addAction(fps20Action);
     m_recordOptionMenu->addAction(fps24Action);
     m_recordOptionMenu->addAction(fps30Action);
+    m_recordOptionMenu->addAction(fps60Action);
     //m_recordOptionMenu->addSeparator();
 
     m_recordOptionMenu->addAction(audio);
@@ -325,6 +330,7 @@ void SubToolWidget::initRecordOption()
         fps20Action->setEnabled(false);
         fps24Action->setEnabled(false);
         fps30Action->setEnabled(false);
+        fps60Action->setEnabled(false);
     } else if (save_format == 1) {
         mp4Action->setChecked(true);
         mp4Action->trigger();
@@ -333,6 +339,7 @@ void SubToolWidget::initRecordOption()
         fps20Action->setEnabled(true);
         fps24Action->setEnabled(true);
         fps30Action->setEnabled(true);
+        fps60Action->setEnabled(true);
     } else {
         mkvAction->setChecked(true);
         mkvAction->trigger();
@@ -341,6 +348,7 @@ void SubToolWidget::initRecordOption()
         fps20Action->setEnabled(true);
         fps24Action->setEnabled(true);
         fps30Action->setEnabled(true);
+        fps60Action->setEnabled(true);
     }
 
     connect(gifAction, &QAction::triggered, this, [ = ](bool checked) {
@@ -351,6 +359,7 @@ void SubToolWidget::initRecordOption()
         fps20Action->setEnabled(false);
         fps24Action->setEnabled(false);
         fps30Action->setEnabled(false);
+        fps60Action->setEnabled(false);
     });
 
     connect(mp4Action, &QAction::triggered, this, [ = ](bool checked) {
@@ -361,6 +370,7 @@ void SubToolWidget::initRecordOption()
         fps20Action->setEnabled(true);
         fps24Action->setEnabled(true);
         fps30Action->setEnabled(true);
+        fps60Action->setEnabled(true);
     });
 
     connect(mkvAction, &QAction::triggered, this, [ = ](bool checked) {
@@ -371,6 +381,7 @@ void SubToolWidget::initRecordOption()
         fps20Action->setEnabled(true);
         fps24Action->setEnabled(true);
         fps30Action->setEnabled(true);
+        fps60Action->setEnabled(true);
     });
 
     connect(t_fpsGroup, QOverload<QAction *>::of(&QActionGroup::triggered),
@@ -386,6 +397,8 @@ void SubToolWidget::initRecordOption()
             t_frameRate = 24;
         } else if (t_act == fps30Action) {
             t_frameRate = 30;
+        } else if (t_act == fps60Action) {
+            t_frameRate = 60;
         }
         t_settings->setValue("recorder", "frame_rate", t_frameRate);
     });
@@ -409,6 +422,10 @@ void SubToolWidget::initRecordOption()
     case 30:
         fps30Action->triggered();
         fps30Action->setChecked(true);
+        break;
+    case 60:
+        fps60Action->triggered();
+        fps60Action->setChecked(true);
         break;
     default:
         fps24Action->triggered();
