@@ -501,6 +501,10 @@ select the area to record</source>
         <translation>30 fps</translation>
     </message>
     <message>
+        <source>60 fps</source>
+        <translation>60 fps</translation>
+    </message>
+    <message>
         <source>Save to</source>
         <translation>گە ساقلاش</translation>
     </message>
